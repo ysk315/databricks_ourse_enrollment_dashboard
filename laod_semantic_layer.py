@@ -2,44 +2,48 @@ from pyspark import pipelines as dp
 from pyspark.sql import functions as F
 from pyspark.sql.window import Window
 
-# Metric 1: Total number of UGRAD students between 2014 and 2026
+# Metric 1: Total number of UGRAD students by year between 2014 and 2026
 @dp.materialized_view(
     name="gold_total_ugrad_2014_2026",
-    comment="Gold layer - Total number of undergraduate students enrolled between 2014 and 2026"
+    comment="Gold layer - Total number of undergraduate students enrolled by year between 2014 and 2026"
 )
 def gold_total_ugrad_2014_2026():
     """
     Calculates the total number of undergraduate student enrollments 
-    from 2014 to 2026 across all courses.
+    for each year from 2014 to 2026.
     """
     df = spark.read.table("silver_enrollment")
     
     result = df.filter(
         (F.col("year") >= 2014) & (F.col("year") <= 2026)
+    ).groupBy(
+        "year"
     ).agg(
         F.sum("UGrad").alias("total_ugrad_enrollments")
-    )
+    ).orderBy("year")
     
     return result
 
 
-# Metric 2: Total number of enrollments in all classes since 2014 to 2026
+# Metric 2: Total number of enrollments in all classes by year since 2014 to 2026
 @dp.materialized_view(
     name="gold_total_enrollments_2014_2026",
-    comment="Gold layer - Total number of enrollments in all classes between 2014 and 2026"
+    comment="Gold layer - Total number of enrollments in all classes by year between 2014 and 2026"
 )
 def gold_total_enrollments_2014_2026():
     """
     Calculates the total number of student enrollments (all categories)
-    from 2014 to 2026 across all courses.
+    for each year from 2014 to 2026.
     """
     df = spark.read.table("silver_enrollment")
     
     result = df.filter(
         (F.col("year") >= 2014) & (F.col("year") <= 2026)
+    ).groupBy(
+        "year"
     ).agg(
         F.sum("Total").alias("total_enrollments")
-    )
+    ).orderBy("year")
     
     return result
 
