@@ -57,9 +57,18 @@ flowchart TD
 
 ### 📸 Actual Pipeline Graph (Databricks Lakeflow UI)
 
-![Pipeline graph: bronze_enrollment (84K records) feeds silver_enrollment (84K) and silver_enrollment_expectations (2.4K), which feed four gold materialized views](./images/pipeline_graph.png)
 
-> Live run of the `course_enrollment_trend` pipeline. `bronze_enrollment` (84K records) streams into two Silver tables — `silver_enrollment` (84K records, full clean/enrich) and `silver_enrollment_expectations` (2.4K records, the subset flagged/quarantined by data-quality expectations). Both feed the four Gold materialized views: `gold_top_5_courses_2014_2026` (5 rows), `gold_top_5_courses_by_year_2014_2026` (75 rows), `gold_total_enrollments_2014_2026` (13 rows — one per year), `gold_total_ugrad_2014_2026` (13 rows — one per year).
+<img width="2590" height="1504" alt="image" src="https://github.com/user-attachments/assets/8d774f0a-5088-4ded-a7f7-8018b4d856d0" />
+
+
+
+
+> Live run of the `course_enrollment_trend` pipeline.
+> `bronze_enrollment` (84K records) streams into two Silver tables
+> 
+> `silver_enrollment` (84K records, full clean/enrich) and `silver_enrollment_expectations` (2.4K records, the subset flagged/quarantined by data-quality expectations).
+
+> Both feed the four Gold materialized views: `gold_top_5_courses_2014_2026` (5 rows), `gold_top_5_courses_by_year_2014_2026` (75 rows), `gold_total_enrollments_2014_2026` (13 rows — one per year), `gold_total_ugrad_2014_2026` (13 rows — one per year).
 
 ---
 
